@@ -7,6 +7,7 @@ DEFAULT_AWS_REGION="us-west-2"
 DEFAULT_DATA_DIR="/opt/zookeeper/snapshots"
 DEFAULT_LOG_DIR="/opt/zookeeper/transactions"
 DEFAULT_ZK_ENSEMBLE_SIZE=0
+DEFAULT_ZK_OBSERVER_THRESHOLD=0
 S3_SECURITY=""
 HTTP_PROXY=""
 : ${HOSTNAME:?$MISSING_VAR_MESSAGE}
@@ -14,6 +15,7 @@ HTTP_PROXY=""
 : ${ZK_DATA_DIR:=$DEFAULT_DATA_DIR}
 : ${ZK_LOG_DIR:=$DEFAULT_LOG_DIR}
 : ${ZK_ENSEMBLE_SIZE:=$DEFAULT_ZK_ENSEMBLE_SIZE}
+: ${ZK_OBSERVER_THRESHOLD:=$DEFAULT_ZK_OBSERVER_THRESHOLD}
 : ${HTTP_PROXY_HOST:=""}
 : ${HTTP_PROXY_PORT:=""}
 : ${HTTP_PROXY_USERNAME:=""}
@@ -31,7 +33,7 @@ cat <<- EOF > /opt/exhibitor/defaults.conf
 	cleanup-max-files=20
 	backup-max-store-ms=21600000
 	connect-port=2888
-	observer-threshold=0
+	observer-threshold=$ZK_OBSERVER_THRESHOLD
 	election-port=3888
 	zoo-cfg-extra=tickTime\=2000&initLimit\=10&syncLimit\=5&quorumListenOnAllIPs\=true
 	auto-manage-instances-settling-period-ms=0
